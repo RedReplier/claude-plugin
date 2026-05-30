@@ -1,6 +1,6 @@
 {
   "name": "redreplier",
-  "description": "Monitor Reddit and Hacker News for keyword mentions of your product, triage AI-scored leads, and manage alerts from your AI agent.",
+  "description": "Monitor Reddit for keyword mentions of your product, triage AI-scored leads, and manage alerts from your AI agent.",
   "version": "1.0.0",
   "author": {
     "name": "RedReplier",
@@ -11,7 +11,6 @@
   "license": "MIT",
   "keywords": [
     "reddit",
-    "hacker-news",
     "monitoring",
     "social-listening",
     "leads",

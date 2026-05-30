@@ -1,6 +1,6 @@
 # RedReplier — Claude Code Plugin
 
-Monitor **Reddit and Hacker News** for mentions of your product from Claude Code. RedReplier AI-scores every mention 0-100 for relevance, so Claude can surface the real leads and skip the noise.
+Monitor **Reddit** for mentions of your product from Claude Code. RedReplier AI-scores every mention 0-100 for relevance, so Claude can surface the real leads and skip the noise.
 
 ## Install
 
@@ -11,7 +11,7 @@ Monitor **Reddit and Hacker News** for mentions of your product from Claude Code
 
 ## Setup
 
-1. Create an account at [redreplier.com](https://redreplier.com)
+1. Create an account at [redreplier.com/signup](https://redreplier.com/signup)
 2. Add the website(s) you want to monitor and your keywords
 3. Generate an API token at [Settings → API Tokens](https://redreplier.com/api-tokens)
 4. From inside Claude Code:
@@ -25,7 +25,7 @@ Once installed, Claude can:
 
 - **Manage monitored websites** — add, update, analyze (AI description), remove
 - **Manage keywords** — add, edit, enable/disable, and activate within your plan
-- **Triage mentions** — list AI-scored Reddit/HN mentions, filter by relevance/keyword/source/date, approve or reject leads
+- **Triage mentions** — list AI-scored Reddit mentions, filter by relevance/keyword/source/date, approve or reject leads
 - **Explain relevance** — see *why* a mention was scored the way it was
 - **Configure alerts** — enable email digests and set the cadence
 
