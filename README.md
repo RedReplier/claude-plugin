@@ -1,6 +1,6 @@
 # RedReplier — Claude Code Plugin
 
-Monitor **Reddit** for mentions of your product from Claude Code. RedReplier AI-scores every mention 0-100 for relevance, so Claude can surface the real leads and skip the noise.
+Monitor **Reddit, Hacker News, X, and Bluesky** for mentions of your product from Claude Code. RedReplier AI-scores every mention 0-100 for relevance, so Claude can surface the real leads and skip the noise.
 
 ## Install
 
@@ -25,16 +25,17 @@ Once installed, Claude can:
 
 - **Manage monitored websites** — add, update, analyze (AI description), remove
 - **Manage keywords** — add, edit, enable/disable, and activate within your plan
-- **Triage mentions** — list AI-scored Reddit mentions, filter by relevance/keyword/source/date, approve or reject leads
+- **Triage mentions** — list AI-scored mentions from Reddit, Hacker News, X, and Bluesky, filter by relevance/keyword/source/date, approve or reject leads
 - **Explain relevance** — see *why* a mention was scored the way it was
 - **Configure alerts** — enable email digests and set the cadence
 
 ## Example
 
 ```
-You: Any high-relevance Reddit mentions of my product this week?
+You: Any high-relevance mentions of my product this week?
 Claude: 3 mentions scoring 75+. Top one: r/webdev — "Looking for an example tool"
-        (score 85) — someone asking for exactly what you offer. Want me to approve it?
+        (score 85) — someone asking for exactly what you offer, plus hits on
+        Hacker News and Bluesky. Want me to approve it?
 ```
 
 ## Alternative: MCP
