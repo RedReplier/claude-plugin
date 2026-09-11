@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "redreplier": {
+      "type": "http",
+      "url": "https://mcp.redreplier.com/mcp"
+    }
+  }
+}
