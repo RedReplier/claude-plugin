@@ -11,13 +11,10 @@ Monitor **Reddit, Hacker News, X, and Bluesky** for mentions of your product fro
 
 ## Setup
 
-1. Create an account at [redreplier.com/signup](https://redreplier.com/signup)
-2. Add the website(s) you want to monitor and your keywords
-3. Generate an API token at [Settings → API Tokens](https://redreplier.com/api-tokens)
-4. From inside Claude Code:
-   ```
-   ./scripts/redreplier.js setup --key redreplier_xxxxx
-   ```
+1. Create an account at [redreplier.com/signup](https://redreplier.com/signup) and add the websites you want to monitor.
+2. In Claude Code, run `/mcp`, pick `redreplier` and sign in with the email you use on RedReplier.
+
+The plugin talks to RedReplier only through its MCP server at `mcp.redreplier.com`, signed in with OAuth. It never asks for an API key and reads nothing from your environment or config files.
 
 ## What it does
 
@@ -59,6 +56,7 @@ For Claude Desktop, Cursor, or other MCP-compatible clients:
 - Product: [redreplier.com](https://redreplier.com)
 - API Tokens: [redreplier.com/api-tokens](https://redreplier.com/api-tokens)
 - MCP Server: [github.com/redreplier/mcp-server](https://github.com/redreplier/mcp-server)
+- Privacy policy: [redreplier.com/privacy](https://redreplier.com/privacy)
 
 ## License
 
