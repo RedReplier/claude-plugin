@@ -1,8 +1,8 @@
 ---
 name: redreplier
 description: >
-  Find and triage leads from public conversations on Reddit, Hacker News, X (Twitter) and Bluesky
-  through the RedReplier MCP tools. RedReplier matches the user's keywords and scores every mention
+  Find and triage leads from public conversations on Reddit, Hacker News, X (Twitter), Bluesky and
+  Facebook through the RedReplier MCP tools. RedReplier matches the user's keywords and scores every mention
   0-100 for relevance. Use this skill WHENEVER the user asks about new mentions or leads, wants the
   best conversations to reply to, asks why a mention scored high or low, wants a reply drafted for a
   thread, wants to approve or reject mentions, add or change the websites and keywords RedReplier
@@ -14,7 +14,7 @@ last-updated: 2026-09-27
 
 # RedReplier
 
-RedReplier watches Reddit, Hacker News, X and Bluesky for the user's keywords and scores every
+RedReplier watches Reddit, Hacker News, X, Bluesky and Facebook for the user's keywords and scores every
 matched mention 0-100 for relevance to their product. You work the account through the redreplier
 MCP server's tools. The tool prefix depends on how the plugin was installed, for example
 `mcp__plugin_redreplier_redreplier__list_mentions`. Each tool carries its own parameter
@@ -88,7 +88,7 @@ Start with `list_websites` when you need website or keyword IDs.
 Useful filters on `list_mentions` and `count_mentions`:
 
 - `websiteId`, `keywords` (exact keyword values, case-insensitive) and `sources`: `REDDIT_POST`,
-  `REDDIT_COMMENT`, `TWITTER` (X), `BLUESKY`, `HACKERNEWS`.
+  `REDDIT_COMMENT`, `TWITTER` (X), `BLUESKY`, `HACKERNEWS`, `FACEBOOK`, `FACEBOOK_GROUP`.
 - `scoreBuckets`: `VERY_LOW` (under 10), `LOW` (10-29), `MEDIUM` (30-49), `HIGH` (50-74),
   `VERY_HIGH` (75+).
 - `minScore` (0-100) keeps mentions scoring at least that much and drops unscored ones.
@@ -101,7 +101,8 @@ the website's minimum score (30 unless changed) are hidden unless `includeLowRel
 `scoreBuckets` with `LOW` or `VERY_LOW` and `minScore` below 30 do not lift that cutoff on their
 own. If the user asks where a mention went, check both defaults.
 
-`subreddit` is only set for Reddit sources.
+`subreddit` holds the subreddit for Reddit sources and the group id for `FACEBOOK_GROUP`; it is null
+for the other sources.
 
 ## Triage
 
@@ -166,14 +167,18 @@ what applied.
 
 ## Errors
 
-Failed calls return text starting with `Error: API error:` followed by the server message.
+Failed calls return text starting with `Error: API error:` followed by the server message. Only
+`workspace_access_denied` is spelled out as a code; recognize the others by their message.
 
-- 401, or the tools are missing: the sign-in is missing or expired. Send the user to `/mcp` as
-  described in Sign-in.
-- 401 with `token_issuer_lost_access`: the member behind the connection left the workspace or was
-  deactivated. The user needs to sign in again through `/mcp` with an account that still has access.
-- 403 with `permission_denied`: the user's workspace role cannot use RedReplier. Admin and Editor
-  can. A Contributor or Viewer needs a workspace admin to change their role.
+- "Authentication required", "Invalid or expired API key", or the tools are missing: the sign-in is
+  missing or expired. Send the user to `/mcp` as described in Sign-in. If a fresh sign-in still gets
+  "Invalid or expired API key", the user's role in that workspace is probably Contributor or
+  Viewer, which cannot use RedReplier. Admin and Editor can; a workspace admin can change the role.
+- A message saying the member who created the key lost access to the workspace
+  (`token_issuer_lost_access`): the user needs to sign in again through `/mcp` with an account that
+  still has access.
+- A message saying the plan does not include API access (403 `subscription_required`): stop and
+  tell the user the plan must be renewed or upgraded in the RedReplier app. Do not retry.
 - 400: usually a plan limit (no website slots left, AI generation quota used up), a duplicate
   domain or keyword, or an invalid ID or URL. Report the message. Do not retry the same call.
 - 403 with `workspace_access_denied`: the `workspaceId` is not one this sign-in reaches. Call
