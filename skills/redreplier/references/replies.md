@@ -26,7 +26,7 @@ fits in 280 characters, a Bluesky reply in 300.
 
 ## Never
 
-- Pretend to be a customer or a neutral bystander.
+- Pose as a customer or a neutral bystander.
 - Reply to a thread that is not asking for help or a tool. Say it is not a lead instead.
 - Disparage a competitor by name.
 - Suggest posting the same reply in several threads.
