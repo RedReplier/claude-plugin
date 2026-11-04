@@ -1,8 +1,8 @@
-# RedReplier — Claude Code Plugin
+# RedReplier plugin for Claude Code and Hermes Agent
 
 Monitor **Reddit, Hacker News, X, Bluesky, and Facebook** for mentions of your product from Claude Code. RedReplier AI-scores every mention 0-100 for relevance, so Claude can surface the real leads and skip the noise.
 
-## Install
+## Install in Claude Code
 
 ```
 /plugin marketplace add redreplier/claude-plugin
@@ -15,6 +15,46 @@ Monitor **Reddit, Hacker News, X, Bluesky, and Facebook** for mentions of your p
 2. In Claude Code, run `/mcp`, pick `redreplier` and sign in with the email you use on RedReplier.
 
 The plugin talks to RedReplier only through its MCP server at `mcp.redreplier.com`, signed in with OAuth. It never asks for an API key and reads nothing from your environment or config files.
+
+## Install in Hermes Agent
+
+You need Hermes Agent 0.21.6 or newer and Node.js 20.18.1 or newer with `npx` on your `PATH`.
+
+From the Hermes plugin catalog:
+
+```bash
+hermes plugins install redreplier
+hermes plugins enable redreplier
+```
+
+Or straight from GitHub:
+
+```bash
+hermes plugins install RedReplier/claude-plugin --no-enable
+hermes plugins enable redreplier
+```
+
+Start a new session. The first time the server starts, your browser opens the RedReplier sign-in page. Sign in with the email you use on RedReplier and approve. The token is kept and refreshed, so you sign in once. If the tools don't show up after you sign in, run `/reload-mcp`.
+
+The Hermes package is `plugin.json`, `mcp.json` and the skill in `skills/redreplier/`. It ships no code of its own. Before you install, know that:
+
+- `mcp.json` runs the pinned `mcp-remote@0.1.49` through `npx`, which downloads it from npm on first use. It opens a local callback port for the sign-in and stores the OAuth tokens in `~/.mcp-auth`.
+- Every tool call goes to `mcp.redreplier.com` and acts on your RedReplier account, with your own role in each workspace. The server decides the tool set at runtime, so the pinned commit doesn't cover it.
+- `plugin.json` marks the server `untrusted`. Hermes asks before every tool the server doesn't mark read-only (adding, changing or deleting websites and keywords, approving or rejecting mentions, explaining a mention's score and changing alert settings), and refuses those tools in cron and other unattended runs.
+- Keywords count against your RedReplier plan, and `analyze_website` reads the website's public pages.
+- The package sends no telemetry.
+
+On a server or another machine without a browser, skip the plugin and add the server to `~/.hermes/config.yaml` with an API key from [redreplier.com/api-tokens](https://redreplier.com/api-tokens):
+
+```yaml
+mcp_servers:
+  redreplier:
+    url: "https://mcp.redreplier.com/mcp"
+    headers:
+      Authorization: "Bearer ${REDREPLIER_API_KEY}"
+```
+
+Put `REDREPLIER_API_KEY=...` in `~/.hermes/.env`. The key works like a password for your RedReplier account, so don't paste it into a chat.
 
 ## What it does
 
