@@ -1,0 +1,39 @@
+{
+  "name": "redreplier",
+  "owner": {
+    "name": "RedReplier",
+    "email": "contact@redreplier.com"
+  },
+  "metadata": {
+    "description": "Monitor Reddit, Hacker News, X, Bluesky, and Facebook for keyword mentions of your product, triage AI-scored leads, and manage alerts from your AI agent.",
+    "version": "1.5.0"
+  },
+  "plugins": [
+    {
+      "name": "redreplier",
+      "source": "./",
+      "description": "Monitor Reddit, Hacker News, X, Bluesky, and Facebook for keyword mentions of your product, triage AI-scored leads, and manage alerts from your AI agent.",
+      "version": "1.5.0",
+      "author": {
+        "name": "RedReplier",
+        "url": "https://redreplier.com"
+      },
+      "homepage": "https://redreplier.com",
+      "repository": "https://github.com/redreplier/claude-plugin",
+      "license": "MIT",
+      "keywords": [
+        "reddit",
+        "hacker-news",
+        "twitter",
+        "bluesky",
+        "monitoring",
+        "social-listening",
+        "leads",
+        "keywords",
+        "mentions",
+        "alerts"
+      ],
+      "strict": true
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "name": "redreplier",
   "description": "Monitor Reddit, Hacker News, X, Bluesky, and Facebook for keyword mentions of your product, triage AI-scored leads, and manage alerts from your AI agent.",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "author": {
     "name": "RedReplier",
     "url": "https://redreplier.com"

@@ -1,11 +1,31 @@
 # RedReplier plugin for Claude Code and Hermes Agent
 
-Monitor **Reddit, Hacker News, X, Bluesky, and Facebook** for mentions of your product from Claude Code. RedReplier AI-scores every mention 0-100 for relevance, so Claude can surface the real leads and skip the noise.
+Find leads in public conversations on Reddit, Hacker News, X, Bluesky and Facebook from Claude Code or Hermes Agent. RedReplier watches for your keywords and scores every mention 0 to 100 for relevance, so the agent can surface the real leads and skip the noise.
+
+## What this repo is
+
+This repo is the RedReplier plugin for Claude Code and Hermes Agent, and nothing else. Both read the same package: `.claude-plugin/plugin.json`, `.mcp.json` and `.claude-plugin/marketplace.json` for Claude Code, `plugin.json` and `mcp.json` for Hermes, and one skill in [`skills/redreplier/`](./skills/redreplier). The plugin connects to the hosted MCP server at `https://mcp.redreplier.com/mcp`, signs in with OAuth and never asks for an API key. Its skill only calls MCP tools and ships no script, because the Claude plugin directory and the Hermes catalog both review for that.
+
+Everything else lives in [RedReplier/agent](https://github.com/RedReplier/agent): the agent skill for `npx skills add` (a CLI script with an API key), the source of the MCP server, and the Gemini CLI extension.
+
+| You use | Install | Sign-in |
+| --- | --- | --- |
+| Claude Code | `/plugin install redreplier --marketplace RedReplier/claude-plugin` | OAuth |
+| Hermes Agent | `hermes plugins install redreplier` | OAuth |
+| Gemini CLI | `gemini extensions install https://github.com/RedReplier/agent` | OAuth |
+| Claude Desktop, Cursor, ChatGPT or any MCP client | Add `https://mcp.redreplier.com/mcp` as a remote server | OAuth, or an API key header |
+| Cursor, Codex, Windsurf, Claude Code or any agent with skills | `npx skills add RedReplier/agent` | API key |
 
 ## Install in Claude Code
 
 ```
-/plugin marketplace add redreplier/claude-plugin
+/plugin install redreplier --marketplace RedReplier/claude-plugin
+```
+
+On Claude Code older than 2.1.275, add the marketplace first:
+
+```
+/plugin marketplace add RedReplier/claude-plugin
 /plugin install redreplier
 ```
 
@@ -58,45 +78,30 @@ Put `REDREPLIER_API_KEY=...` in `~/.hermes/.env`. The key works like a password 
 
 ## What it does
 
-Once installed, Claude can:
+Once installed, Claude or Hermes can:
 
-- **Manage monitored websites** — add, update, analyze (AI description), remove
-- **Manage keywords** — add, edit, enable/disable, and delete; keywords beyond the plan stay pending
-- **Triage mentions** — list AI-scored mentions from Reddit, Hacker News, X, Bluesky, and Facebook, filter by relevance/minimum score/keyword/source/date, approve or reject leads
-- **Explain relevance** — see *why* a mention was scored the way it was
-- **Configure alerts** — enable email digests and set the cadence
-- **Switch workspaces** — one sign-in reaches every workspace you belong to
+- Add, update, analyze and remove monitored websites
+- Add, reword, disable, enable and delete keywords. Keywords that fit the plan go active, the rest wait as pending
+- List and count AI-scored mentions, filtered by relevance, minimum score, keyword, source or date
+- Approve or reject mentions, or send them back to the inbox
+- Explain why a mention scored the way it did, and draft a reply
+- Turn email alerts on or off and set how often they arrive
+- Work in any workspace your sign-in reaches
 
 ## Example
 
 ```
 You: Any high-relevance mentions of my product this week?
-Claude: 3 mentions scoring 75+. Top one: r/webdev — "Looking for an example tool"
-        (score 85) — someone asking for exactly what you offer, plus hits on
-        Hacker News and Bluesky. Want me to approve it?
-```
-
-## Alternative: MCP
-
-For Claude Desktop, Cursor, or other MCP-compatible clients:
-
-```json
-{
-  "mcpServers": {
-    "redreplier": {
-      "type": "http",
-      "url": "https://mcp.redreplier.com/mcp",
-      "headers": { "Authorization": "Bearer redreplier_your_key" }
-    }
-  }
-}
+Agent: 3 mentions scoring 75+. Top one: r/webdev, "Looking for an example tool"
+       (score 85), someone asking for exactly what you offer, plus hits on
+       Hacker News and Bluesky. Want me to approve it?
 ```
 
 ## Links
 
 - Product: [redreplier.com](https://redreplier.com)
-- API Tokens: [redreplier.com/api-tokens](https://redreplier.com/api-tokens)
-- MCP Server: [github.com/redreplier/mcp-server](https://github.com/redreplier/mcp-server)
+- AI agents: [redreplier.com/features/agents](https://redreplier.com/features/agents)
+- Skill, MCP server and Gemini extension: [RedReplier/agent](https://github.com/RedReplier/agent)
 - Privacy policy: [redreplier.com/privacy](https://redreplier.com/privacy)
 
 ## License
