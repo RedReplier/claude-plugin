@@ -76,26 +76,82 @@ mcp_servers:
 
 Put `REDREPLIER_API_KEY=...` in `~/.hermes/.env`. The key works like a password for your RedReplier account, so don't paste it into a chat.
 
-## What it does
+## Example prompts
 
-Once installed, Claude or Hermes can:
+- "Show me this week's best leads, score 70 and above."
+- "Why did this Reddit thread score 85? Draft a reply I can post."
+- "Add 'social media scheduler' and 'buffer alternative' as keywords for my website."
+- "Approve the top three mentions and reject the rest."
+- "How many Hacker News mentions did we get this month?"
+- "Send me an email digest every 4 hours."
+- "Write a description for https://example.com and start monitoring it."
 
-- Add, update, analyze and remove monitored websites
-- Add, reword, disable, enable and delete keywords. Keywords that fit the plan go active, the rest wait as pending
-- List and count AI-scored mentions, filtered by relevance, minimum score, keyword, source or date
-- Approve or reject mentions, or send them back to the inbox
-- Explain why a mention scored the way it did, and draft a reply
-- Turn email alerts on or off and set how often they arrive
-- Work in any workspace your sign-in reaches
+## Tools
 
-## Example
+19 tools. Mentions come from Reddit, Hacker News, X, Bluesky and Facebook. Slack, Telegram, Notion and Linear alerts are set up in the RedReplier app.
 
-```
-You: Any high-relevance mentions of my product this week?
-Agent: 3 mentions scoring 75+. Top one: r/webdev, "Looking for an example tool"
-       (score 85), someone asking for exactly what you offer, plus hits on
-       Hacker News and Bluesky. Want me to approve it?
-```
+### Workspaces and websites
+
+| Tool | What it does | Changes data |
+| --- | --- | --- |
+| `list_workspaces` | List the workspaces the sign-in can act in; pass an id as `workspaceId` to any other tool | No |
+| `list_websites` | List monitored websites with their keywords and statuses | No |
+| `get_website` | Get one website with its keywords | No |
+| `create_website` | Add a website to monitor, with optional keywords and description | Yes |
+| `update_website` | Change a website's name or description | Yes |
+| `delete_website` | Stop monitoring a website | Yes |
+| `analyze_website` | Write a description of a website from its URL with AI | Yes |
+
+### Keywords
+
+| Tool | What it does | Changes data |
+| --- | --- | --- |
+| `add_keywords` | Add keywords to a website; those that fit the plan go active, the rest wait as pending | Yes |
+| `edit_keyword` | Reword a keyword; it is graded again and keeps its slot | Yes |
+| `disable_keyword` | Stop monitoring a keyword; its mentions stay | Yes |
+| `enable_keyword` | Turn a disabled keyword back on; it waits as pending when the plan is full, and never charges | Yes |
+| `delete_keyword` | Delete a keyword and every mention it produced | Yes |
+| `keyword_change_usage` | Keyword-edit allowance and usage | No |
+
+### Mentions
+
+| Tool | What it does | Changes data |
+| --- | --- | --- |
+| `list_mentions` | List AI-scored mentions, filtered by status, relevance, minimum score, keyword, source and date | No |
+| `count_mentions` | Count mentions with the same filters | No |
+| `update_mention_status` | Approve, reject or send a mention back to the inbox | Yes |
+| `explain_mention` | Why a mention scored the way it did, with tags and a drafted reply | Yes |
+
+### Alerts
+
+| Tool | What it does | Changes data |
+| --- | --- | --- |
+| `get_alert_settings` | Email alert settings: on or off, cadence and the plan's fastest cadence | No |
+| `update_alert_settings` | Turn email alerts on or off and set the cadence | Yes |
+
+## Roles, permissions and safety
+
+- Every call runs with the signed-in member's role in the workspace. Reads need `workspace.read`; every change needs `redreplier.write`, which Admin and Editor hold.
+- Read-only tools carry `readOnlyHint`, so clients that confirm writes ask before adding websites or keywords, triaging mentions or changing alerts.
+- Keywords count against your RedReplier plan. Adding one never charges: keywords beyond the plan wait as pending.
+- Mentions are public posts. `analyze_website` reads the website's public pages.
+
+## FAQ
+
+**Do I need an API key?**
+No. Point your client at `https://mcp.redreplier.com/mcp` and sign in with the email you use on RedReplier. Keys are for headless agents and clients without OAuth.
+
+**Can the agent post replies for me?**
+No. It drafts a reply with `explain_mention`; you post it yourself.
+
+**Will adding keywords charge me?**
+No. Keywords that fit the plan go active, the rest wait as pending until you upgrade in the app.
+
+**Which sources does it watch?**
+Reddit, Hacker News, X (Twitter), Bluesky and Facebook.
+
+**Can I use RedReplier outside Claude Code and Hermes?**
+Yes. Claude Desktop, ChatGPT, Cursor, Windsurf, VS Code, Codex and Gemini CLI connect to the same server at `https://mcp.redreplier.com/mcp`. The setup for each is in [RedReplier/agent](https://github.com/RedReplier/agent#setup-by-client).
 
 ## Links
 
